@@ -1,6 +1,8 @@
 package lviv.home.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,17 +16,21 @@ public class Author {
 	@Column(name="author_name")
 	private String authorName;
 	
-	@Column(name="list_of_books")
+	@Column(name="country")
+	private String country;
+	
+	
 	@OneToMany(mappedBy="author")
-	private ArrayList<Book> books;
+	private List<Book> books = new ArrayList<Book>();
 	
 	
 	public Author() {
 		this.authorName = "default author";
 	}
 	
-	public Author(String author_name) {
+	public Author(String author_name, String country) {
 		this.authorName = author_name;
+		this.country=country;
 	}
 
 	
@@ -45,7 +51,7 @@ public class Author {
 		this.authorName = authorName;
 	}
 
-	public ArrayList<Book> getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
 

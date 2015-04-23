@@ -1,10 +1,12 @@
 package lviv.home.model;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "author_table")
+@Table(name = "genre_table")
 public class Genre {
 	@Id
 	@GeneratedValue
@@ -14,7 +16,9 @@ public class Genre {
 	@Column(name ="genre_name")
 	private String genreName;
 	
-	private Set<Book> books;
+
+	@OneToMany(mappedBy="genre")
+	private List<Book> books = new ArrayList<Book>();
 	
 	
 	public Genre() {
@@ -41,11 +45,11 @@ public class Genre {
 		this.genreName = genreName;
 	}
 
-	public Set<Book> getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Set<Book> books) {
+	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
 

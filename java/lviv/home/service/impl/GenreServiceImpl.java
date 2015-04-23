@@ -1,11 +1,13 @@
 package lviv.home.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lviv.home.dao.GenreDAO;
 import lviv.home.model.Genre;
 import lviv.home.service2.GenreService;
 
 public class GenreServiceImpl implements GenreService{
-	
+	@Autowired
 	private GenreDAO	dao;
 
 	@Override

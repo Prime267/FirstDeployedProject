@@ -9,5 +9,5 @@ public interface BookService {
 	public Book getBook(Integer id);
 	public Iterable<Book> getAllBooks();
 	public void deleteBook(Integer id);
-	public Book editBook(Integer id,Book book);
+//	public Book editBook(Integer id,Book book);
 	}

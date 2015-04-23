@@ -1,10 +1,14 @@
 package lviv.home.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import lviv.home.dao.AuthorDAO;
 import lviv.home.model.Author;
 import lviv.home.service2.AuthorService;
-
+@Service("authorService")
 public class AuthorServiceImpl implements AuthorService{
+	@Autowired
 	private AuthorDAO dao;
 
 	@Override
