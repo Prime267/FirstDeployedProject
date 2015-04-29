@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import org.springframework.data.convert.JodaTimeConverters.LocalDateToDateConverter;
+
 
 @Entity
 @Table(name = "book_table")
@@ -19,8 +19,8 @@ public class Book {
 	@Column(name = "the_name")
 	private String theName;
 
-	@Column(name = "date_perform")
-	private Date date;
+	@Column(name = "year_perform")
+	private String date;
 
 	@Column(name = "price")
 	private Double price;
@@ -41,54 +41,43 @@ public class Book {
 
 	}
 
-	public Book(Long bookId, String theName, LocalDate date, Double price, Author author,Genre genre) {
-		Date datePerform = localDatetoDate(date);
+	
+
+	public Book(String theName, LocalDate date, Double price, Integer count, Author author,
+			Genre genre) {
+		String datePerform = yeartoStr(date);
+		
 		this.theName = theName;
 		this.date = datePerform;
 		this.price = price;
-		this.count = 0;
+		this.count = count;
 		this.author = author;
 		this.genre = genre;
 	}
 
+
+
 	public Book(String theName, LocalDate date, Double price) {
-		Date datePerform = localDatetoDate(date);
+		String datePerform = yeartoStr(date);
 		this.theName = theName;
-		this.count=0;
+//		this.count=count;
 		this.date = datePerform;
 		this.price = price;
 	}
 
-	public Book(String theName, Double price, Integer count) {
+	public Book(String theName, Double price,Integer count) {
 		this.theName = theName;
+		this.date = "1970";
 		this.price = price;
-//		this.count = count;
+		this.count = count;
 	}
 
-	private static Date localDatetoDate(LocalDate date) {
-		Date datePerform = new Date();
-		int month = date.getMonthValue() - 1;
-		int day = date.getDayOfMonth();
-		if (date.getYear() < 1900) {
-			datePerform = new Date(-(1900 - date.getYear()), month, day);
-		} else {
-			datePerform = new Date(date.getYear() - 1900, month, day);
-		}
-		return datePerform;
+	private static String yeartoStr(LocalDate date) {
+		Integer dateInt = date.getYear();
+		String dateStr = ""+dateInt;
+		return dateStr;
 	}
 	
-	private LocalDate dateToLocalDate(Date date) {
-		int year = 0;
-		int month = date.getMonth()+1;
-		int day = date.getDate();
-		if (date.getYear()>=0) {
-			year = 1900+ date.getYear();
-		} else{
-			year = 1900 - date.getYear();
-		}
-		LocalDate localdate = LocalDate.of(year, month, day);
-		return localdate;
-	}
 
 	public Long getBookId() {
 		return bookId;
@@ -106,14 +95,12 @@ public class Book {
 		this.theName = theName;
 	}
 
-	public LocalDate getDatePerform() {
-		LocalDate pDate = dateToLocalDate(date);
-		return pDate;
+	public String getDatePerform() {
+		return this.date;
 	}
 
-	public void setDatePerform(LocalDate date) {
-		Date datePerform = localDatetoDate(date);
-		this.date = datePerform;
+	public void setDatePerform(String date) {
+		this.date = date;
 	}
 
 	public Double getPrice() {
@@ -149,11 +136,14 @@ public class Book {
 		this.count = count;
 	}
 
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Book [bookId=" + bookId + ", theName=" + theName + ", datePerform="
-				+ date.getDate() + "-" + date.getMonth() + "-" + date.getYear() + ", price="
-				+ price + ", author=" + author + ", genre=" + genre + "]";
+				+ date + ", price="	+ price + ", author=" + author + ", genre=" + genre + "]";
 	}
 
 }

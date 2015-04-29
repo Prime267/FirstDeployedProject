@@ -11,7 +11,7 @@ public class Author {
 	@Id
 	@GeneratedValue
 	@Column(name="author_id")
-	private Long authorId;
+	private Integer authorId;
 	
 	@Column(name="author_name")
 	private String authorName;
@@ -35,11 +35,11 @@ public class Author {
 
 	
 
-	public Long getAuthorId() {
+	public Integer getAuthorId() {
 		return authorId;
 	}
 
-	public void setAuthorId(Long authorId) {
+	public void setAuthorId(Integer authorId) {
 		this.authorId = authorId;
 	}
 

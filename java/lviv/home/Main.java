@@ -32,32 +32,43 @@ public class Main {
 		// "authorService");
 		// BookServiceImpl bsi = ac.getBean(BookServiceImpl.class,
 		// "bookService");
-
-		 Author author1 = new Author("Іван Франко", "Україна");
+		Genre genre1 = new Genre("genre");
+		
+		Author author1 = new Author("Іван Франко", "Україна");
+		
+		
 		// Author author2 = new Author("Еріх Марія Ремарк", "Німеччина");
 		// Author author3 = new Author("Стівен Кінг", "США");
 
-		
-		Book newBook = new Book("Нова книга 3", LocalDate.of(2010,1,1), 50.0);
-////	
-		
-//		AuthorDAOHib.seveAuthor(author1);
-//		BookDAOHib.addBook(newBook, 1L, 1L);
-		
-//		BookDAOHib.refreshBooks();
-		
-		BookDAOHib.addBookTwo(newBook,2 , 1L, 1L);
-		
-		
+		Book book = new Book("book", 100.0, 1);
+		Book newBook = new Book("sfsd", LocalDate.now(), 1.0, 50, author1,genre1 );
 
 		
+		BookDAOHib.editBook(1, newBook);
+		
+//		BookDAOHib.deleteAllBooks();
+//		BookDAOHib.refreshBooks();
+//		BookDAOHib.addBook(book, 1, 1);
+//		BookDAOHib.editBook(1, newBook);
 		
 		
+//		Session session = HibernateUtil.startTransaction();
+//
+////		session.save(genre1);
+////		session.save(author1);
+//		newBook.setAuthor((Author) session.get(Author.class, 1));
+//		newBook.setGenre((Genre) session.get(Genre.class, 18));
+//		session.save(newBook);
+//		HibernateUtil.finishTransaction(session);
+//		System.out.println(id.size());
+//
 //		
-//		System.out.println( localDate.atStartOfDay().getClass());
-////		Date dateDate = new Date(localDate.getYear()-1900,1,1);
-//		System.out.println(dateDate);
-		
-//		BookDAOHib.saveBook(book, authorId, genreId);
+//		Integer year = LocalDate.of(2015, 1, 1).getYear();
+//		String yearStr = ""+year;
+//		System.out.println(yearStr);
+		// BookDAOHib.addBook(book, 1, 1);
+
+		// BookDAOHib.editBook(1, book);
+
 	}
 }
