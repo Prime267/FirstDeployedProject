@@ -31,12 +31,13 @@ genre_id integer,
 constraint authorFK foreign key (author_id) references author_table(author_id),
 constraint genreFK foreign key (genre_id) references genre_table(genre_id));
 
-create table purchasedBooks_table(
+create table sold_books_table(
 book_id bigint primary key auto_increment,
 the_name varchar(30),
 year_perform varchar(10),
 price double,
 count int,
+sale_date varchar(30),
 author_id integer,
 genre_id integer,
 constraint authorFK foreign key (author_id) references author_table(author_id),

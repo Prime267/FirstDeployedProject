@@ -1,10 +1,12 @@
 package lviv.home.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lviv.home.HibernateUtil;
 import lviv.home.model.Author;
 import lviv.home.model.Book;
+import lviv.home.model.BoughtBook;
 import lviv.home.model.Genre;
 
 import org.hibernate.Session;
@@ -40,9 +42,9 @@ public class BookDAO {
 		List<Book> books = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
 																							// всі
 																							// книги
-		
+
 		if (books.contains(newBook)) { // якщо є така
-			
+
 			countBooks = books.get(0).getCount() + newBook.getCount();// додаю
 																		// кількість
 			int bookId = books.get(0).getBookId(); // дістаємо ID книги
@@ -53,7 +55,7 @@ public class BookDAO {
 		} else {
 			List authorsId = session.createQuery("select authorId from Author a where a.authorName=:authorName")
 					.setParameter("authorName", newBook.getAuthor().getAuthorName()).list();
-			
+
 			List genresId = session.createQuery("select genreId from Genre g where g.genreName=:genreName")
 					.setParameter("genreName", newBook.getGenre().getGenreName()).list();
 
@@ -130,4 +132,34 @@ public class BookDAO {
 		HibernateUtil.finishTransaction(session);
 	}
 
+	public static void buyTheBook(Book buyBook) {
+		BoughtBook boughtBook = new BoughtBook(buyBook);// конвертуємо
+		boughtBook.setSaleDate(LocalDate.now());// встановлюємо дату придбання
+		int count = boughtBook.getCount();
+
+		Session session = HibernateUtil.startTransaction();
+		
+
+		List<Book> books = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
+		// всі
+		// книги
+		for (Book book : books) {
+			if (book.equals(buyBook)) {
+				Book bookAfterBought = book;
+				if (book.getCount() - boughtBook.getCount() < 0) {
+					throw new IndexOutOfBoundsException("Немає стільки доступних екземплярів в наявності");
+				}
+				if (book.getCount() - boughtBook.getCount() == 0) {
+					session.delete(book);
+				} else {
+					count = book.getCount() - count;
+					int id = book.getBookId();
+					session.createSQLQuery("UPDATE `authordatabase`.`book_table` SET `count`='" + count
+							+ "' WHERE `book_id`='" + id + "';");
+				}
+				session.save(boughtBook);// зберігаємо в проданих
+			}
+		}
+		HibernateUtil.finishTransaction(session);
+	}
 }
