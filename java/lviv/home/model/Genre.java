@@ -26,7 +26,7 @@ public class Genre {
 	}
 
 	public Genre(String genreName) {
-			this.genreName = genreName;
+		this.genreName = genreName;
 	}
 
 	public Integer getGenreId() {
@@ -54,8 +54,18 @@ public class Genre {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		Genre genre = (Genre)obj;
+		if (this.getGenreName().equals(genre.getGenreName())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public String toString() {
-		return "Genre [genreId=" + genreId + ", genreName=" + genreName + "]";
+		return this.genreId+" "+genreName;
 	} 
 	
 	

@@ -6,34 +6,36 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="author_table")
+@Table(name = "author_table")
 public class Author {
 	@Id
 	@GeneratedValue
-	@Column(name="author_id")
+	@Column(name = "author_id")
 	private Integer authorId;
-	
-	@Column(name="author_name")
+
+	@Column(name = "author_name")
 	private String authorName;
-	
-	@Column(name="country")
+
+	@Column(name = "country")
 	private String country;
-	
-	
-	@OneToMany(mappedBy="author")
+
+	@OneToMany(mappedBy = "author")
 	private List<Book> books = new ArrayList<Book>();
-	
-	
+
 	public Author() {
-		this.authorName = "default author";
-	}
-	
-	public Author(String author_name, String country) {
-		this.authorName = author_name;
-		this.country=country;
+		this.authorName = "";
 	}
 
-	
+	public Author(String author_name, String country) {
+		this.authorName = author_name;
+		this.country = country;
+	}
+
+	public Author(String author_name, String country, List<Book> books) {
+		this.authorName = author_name;
+		this.country = country;
+		this.books = books;
+	}
 
 	public Integer getAuthorId() {
 		return authorId;
@@ -59,12 +61,28 @@ public class Author {
 		this.books = books;
 	}
 
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Author author = (Author) obj;
+		if (this.getAuthorName().equals(author.getAuthorName()) && this.getCountry().equals(author.getCountry())) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	@Override
 	public String toString() {
-		return "Author [author_id=" + authorId + ", author_name="
-				+ authorName + "]";
+		return authorName;
 	}
-	
-	
-	
+
 }

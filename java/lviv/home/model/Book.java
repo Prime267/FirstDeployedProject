@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Table(name = "book_table")
 public class Book {
@@ -14,7 +12,7 @@ public class Book {
 	@Id
 	@GeneratedValue
 	@Column(name = "book_id")
-	private Long bookId;
+	private Integer bookId;
 
 	@Column(name = "the_name")
 	private String theName;
@@ -24,6 +22,7 @@ public class Book {
 
 	@Column(name = "price")
 	private Double price;
+
 	@Column(name = "count")
 	private Integer count;
 
@@ -41,12 +40,9 @@ public class Book {
 
 	}
 
-	
-
-	public Book(String theName, LocalDate date, Double price, Integer count, Author author,
-			Genre genre) {
+	public Book(String theName, LocalDate date, Double price, Integer count, Author author, Genre genre) {
 		String datePerform = yeartoStr(date);
-		
+
 		this.theName = theName;
 		this.date = datePerform;
 		this.price = price;
@@ -55,17 +51,15 @@ public class Book {
 		this.genre = genre;
 	}
 
-
-
 	public Book(String theName, LocalDate date, Double price) {
 		String datePerform = yeartoStr(date);
 		this.theName = theName;
-//		this.count=count;
+		// this.count=count;
 		this.date = datePerform;
 		this.price = price;
 	}
 
-	public Book(String theName, Double price,Integer count) {
+	public Book(String theName, Double price, Integer count) {
 		this.theName = theName;
 		this.date = "1970";
 		this.price = price;
@@ -74,16 +68,15 @@ public class Book {
 
 	private static String yeartoStr(LocalDate date) {
 		Integer dateInt = date.getYear();
-		String dateStr = ""+dateInt;
+		String dateStr = "" + dateInt;
 		return dateStr;
 	}
-	
 
-	public Long getBookId() {
+	public Integer getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(Long bookId) {
+	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
 
@@ -95,11 +88,11 @@ public class Book {
 		this.theName = theName;
 	}
 
-	public String getDatePerform() {
+	public String getDate() {
 		return this.date;
 	}
 
-	public void setDatePerform(String date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -119,15 +112,15 @@ public class Book {
 		this.author = author;
 	}
 
+	// @Enumerated(EnumType.ORDINAL)
 	public Genre getGenre() {
-		return genre;
+		return this.genre;
 	}
 
 	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
 
-	
 	public Integer getCount() {
 		return count;
 	}
@@ -136,14 +129,22 @@ public class Book {
 		this.count = count;
 	}
 
-	
-	
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		Book book = (Book) obj;
+		if (this.getTheName().equals(book.getTheName()) && this.getPrice().equals(book.getPrice())
+				&& this.getDate().equals(book.getDate()) && this.getGenre().equals(book.getGenre())
+				&& this.getAuthor().equals(book.getAuthor())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	public String toString() {
-		return "Book [bookId=" + bookId + ", theName=" + theName + ", datePerform="
-				+ date + ", price="	+ price + ", author=" + author + ", genre=" + genre + "]";
+		return "Book [bookId=" + bookId + ", theName=" + theName + ", datePerform=" + date + ", price=" + price
+				+ ", author=" + author + ", genre=" + genre + "]";
 	}
 
 }

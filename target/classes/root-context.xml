@@ -16,7 +16,7 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/mydb" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/AuthorDataBase" />
 		<property name="username" value="root" />
 		<property name="password" value="1111" />
 	</bean>
@@ -28,7 +28,7 @@
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
@@ -39,5 +39,5 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
+	<jpa:repositories base-package="lviv.home.dao" />
 </beans>
