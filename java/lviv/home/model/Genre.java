@@ -56,8 +56,6 @@ public class Genre {
 	@Override
 	public boolean equals(Object obj) {
 		Genre genre = (Genre)obj;
-		System.out.println(genre);
-		System.out.println(this);
 		if (this.getGenreName().equals(genre.getGenreName())) {
 			return true;
 		} else {

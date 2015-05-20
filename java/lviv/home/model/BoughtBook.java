@@ -1,6 +1,7 @@
 package lviv.home.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +46,9 @@ public class BoughtBook {
 
 	
 	
-	
+	public BoughtBook() {
+		
+	}
 	
 	public BoughtBook(Book book) {
 		this.theName = book.getTheName();
@@ -103,7 +106,7 @@ public class BoughtBook {
 		return saleDate;
 	}
 
-	public void setSaleDate(LocalDate saleDate) {
+	public void setSaleDate(LocalDateTime saleDate) {
 		this.saleDate = saleDate.toString();
 	}
 

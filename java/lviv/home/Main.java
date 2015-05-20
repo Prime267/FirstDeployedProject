@@ -32,7 +32,7 @@ public class Main {
 		// AuthorController aCont = ac.getBean(AuthorController.class,
 		// "AuthorController");
 //
-//		
+//
 		Genre genre1 = new Genre("Новітній жанр");
 		Genre genre2 = new Genre("Новітній жанр");
 		
@@ -42,18 +42,17 @@ public class Main {
 		Author author1 = new Author("м'я", "Країна");
 		Author author2 = new Author("м'я", "Країна");
 		
-		Book book1 = new Book("Test book NEW", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
-		Book book2 = new Book("Test book", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
-		
+		Book book1 = new Book("Test book 1", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
+		Book book2 = new Book("Test book 2", LocalDate.of(2015, 5, 13), 10.0, 3, author1, genre1);
+		Book book3 = new Book("Test book 3", LocalDate.of(2015, 5, 13), 10.0, 3, author1, genre1);
 		
 		
 		
 //		BookDAO.refreshBooks();
-//		
-		
-		BookDAO.addBook(book1);
-//		BookDAO.buyTheBook(book1);
-		
+//		BookDAO.addBook(book1);
+//		BookDAO.addBook(book2);
+//		BookDAO.addBook(book3);
+		System.out.println(AuthorDAO.getAuthorsByCountry("Німеччина"));
 		
 //		BookDAO.buyTheBook(book1);
 //		Book book = new Book("New book", LocalDate.now(), 10.0, 1, author, genre);

@@ -26,13 +26,23 @@ public class AuthorDAO {
 		return author;
 	}
 
-	public List<Author> getAllAuthors() {
+	public static List<Author> getAllAuthors() {
 		Session session = HibernateUtil.startTransaction();
 		List<Author> authors = session.createQuery("select a from Author a").list();
 		HibernateUtil.finishTransaction(session);
 		return authors;
 	}
 
+	public static List<Author> getAuthorsByCountry(String country){
+		Session session = HibernateUtil.startTransaction();
+		List<Author> authors = (List<Author>)session.createQuery("select a from Author a where a.country=:country").setParameter("country", country).list();
+		HibernateUtil.finishTransaction(session);
+		return authors;
+	}
+	
+	
+	
+	
 	public static void removeAuthor(Integer id) {
 		Session session = HibernateUtil.startTransaction();
 		session.createQuery("delete from Author where authorId='" + id + "'").executeUpdate();
