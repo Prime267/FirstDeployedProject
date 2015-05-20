@@ -11,6 +11,7 @@ import lviv.home.model.Genre;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.TransientObjectException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -36,18 +37,23 @@ public class BookDAO {
 
 	@SuppressWarnings("unchecked")
 	public static void addBook(Book newBook) throws Exception {
+		int bookId = 0;
 		int countBooks = newBook.getCount();
 		Session session = HibernateUtil.startTransaction();// початок транзакції
 
-		List<Book> books = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
+		List<Book> allBooks = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
 																							// всі
 																							// книги
 
-		if (books.contains(newBook)) { // якщо є така
-
-			countBooks = books.get(0).getCount() + newBook.getCount();// додаю
-																		// кількість
-			int bookId = books.get(0).getBookId(); // дістаємо ID книги
+		if (allBooks.contains(newBook)) { // якщо є така
+				System.out.println("First equals");
+			
+				for (Book book : allBooks) {
+					if (book.equals(newBook)) {
+						countBooks = book.getCount() + newBook.getCount();//додаю кількість
+						bookId = book.getBookId(); // дістаємо ID книги
+					}
+				}
 			session.createSQLQuery(
 					"UPDATE `authordatabase`.`book_table` SET `count`='" + countBooks + "' WHERE `book_id`='" + bookId
 							+ "';").executeUpdate();// встановлюю кількість
@@ -67,8 +73,32 @@ public class BookDAO {
 			}
 			session.save(newBook);// не знайшли -- додаю новесеньку книгу
 			// --------------------------------------------------------------------------------------------------------------
+			try {
+				HibernateUtil.finishTransaction(session);
+			} catch (Exception e) {
+				session = HibernateUtil.startTransaction();
+				allBooks = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
+				// всі
+				// книги
+				bookId = 0;
+				for (Book book : allBooks) {
+					if (newBook.specialEqualsWithoutAuthorAndGenre(book)) {
+						bookId = book.getBookId();
+						System.out.println("In method ADD!!");
+						System.out.println(newBook);
+						System.out.println(book);
+					}
+				}
+
+				String query = "UPDATE `authordatabase`.`book_table` SET `author_id`='" + authorsId.get(0)
+						+ "', `genre_id`='" + genresId.get(0) + "' WHERE `book_id`='" + bookId + "';";
+				
+				
+				session.createSQLQuery(query).executeUpdate();
+				HibernateUtil.finishTransaction(session);
+			}
 		}
-		HibernateUtil.finishTransaction(session);
+
 	}
 
 	public static void editBook(Integer bookId, Book book) {
@@ -138,7 +168,6 @@ public class BookDAO {
 		int count = boughtBook.getCount();
 
 		Session session = HibernateUtil.startTransaction();
-		
 
 		List<Book> books = (List<Book>) session.createQuery("select b from Book b").list();// дістаємо
 		// всі
@@ -157,9 +186,44 @@ public class BookDAO {
 					session.createSQLQuery("UPDATE `authordatabase`.`book_table` SET `count`='" + count
 							+ "' WHERE `book_id`='" + id + "';");
 				}
-				session.save(boughtBook);// зберігаємо в проданих
+
+				// ______________________________________________________________________________________________
+				int countBooks = boughtBook.getCount();
+				List<BoughtBook> boughtBooks = (List<BoughtBook>) session.createQuery("select b from BoughtBook b")
+						.list();// дістаємо
+				// всі продані книги
+				// книги
+
+				if (books.contains(boughtBook)) { // якщо є така
+
+					countBooks = books.get(0).getCount() + boughtBook.getCount();// додаю
+																					// кількість
+					int bookId = books.get(0).getBookId(); // дістаємо ID книги
+					session.createSQLQuery(
+							"UPDATE `authordatabase`.`sold_books_table` SET `count`='" + countBooks
+									+ "' WHERE `book_id`='" + bookId + "';").executeUpdate();// встановлюю
+																								// кількість
+
+				} else {
+					List authorsId = session
+							.createQuery("select authorId from Author a where a.authorName=:authorName")
+							.setParameter("authorName", boughtBook.getAuthor().getAuthorName()).list();
+
+					List genresId = session.createQuery("select genreId from Genre g where g.genreName=:genreName")
+							.setParameter("genreName", boughtBook.getGenre().getGenreName()).list();
+
+					if (authorsId.size() == 0) {// якщо немає - додаю
+						session.save(boughtBook.getAuthor());
+					}
+					if (genresId.size() == 0) {// якщо немає - додаю
+						session.save(boughtBook.getGenre());
+					}
+					session.save(boughtBook);// не знайшли -- додаю новесеньку
+												// книгу
+					// ______________________________________________________________________________________________
+				}
 			}
+			HibernateUtil.finishTransaction(session);
 		}
-		HibernateUtil.finishTransaction(session);
 	}
 }

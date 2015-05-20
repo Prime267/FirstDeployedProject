@@ -48,30 +48,30 @@ public class AuthorDAO {
 		HibernateUtil.finishTransaction(session);
 	}
 
-	public static void refreshAuthors() {
-
-		Session session = HibernateUtil.startTransaction();
-		List<Author> authors = session.createQuery("SELECT a FROM Author a").list();
-		if (authors.size() == 0) {
-			session.createSQLQuery("alter table authordatabase.author_table auto_increment=0;")
-					.executeUpdate();// обнулення автоінк
-		} else {
-			session.createSQLQuery("delete from authordatabase.author_table").executeUpdate();// очистка
-			// таблиці
-			session.createSQLQuery("alter table authordatabase.author_table auto_increment=0;")
-					.executeUpdate();// обнулення автоінк
-		}
-
-		HibernateUtil.finishTransaction(session);
-
-		for (Author author : authors) { // обнулення всіх book_id
-			author.setAuthorId(null);
-		}
-		session = HibernateUtil.startTransaction();
-		for (Author author : authors) {// збереження книжок з обнуленими IDшками
-			session.save(author);
-		}
-		HibernateUtil.finishTransaction(session);
-	}
+//	public static void refreshAuthors() {
+//
+//		Session session = HibernateUtil.startTransaction();
+//		List<Author> authors = session.createQuery("SELECT a FROM Author a").list();
+//		if (authors.size() == 0) {
+//			session.createSQLQuery("alter table authordatabase.author_table auto_increment=0;")
+//					.executeUpdate();// обнулення автоінк
+//		} else {
+//			session.createSQLQuery("delete from authordatabase.author_table").executeUpdate();// очистка
+//			// таблиці
+//			session.createSQLQuery("alter table authordatabase.author_table auto_increment=0;")
+//					.executeUpdate();// обнулення автоінк
+//		}
+//
+//		HibernateUtil.finishTransaction(session);
+//
+//		for (Author author : authors) { // обнулення всіх book_id
+//			author.setAuthorId(null);
+//		}
+//		session = HibernateUtil.startTransaction();
+//		for (Author author : authors) {// збереження книжок з обнуленими IDшками
+//			session.save(author);
+//		}
+//		HibernateUtil.finishTransaction(session);
+//	}
 
 }

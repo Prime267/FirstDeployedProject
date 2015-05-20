@@ -36,29 +36,26 @@ public class Main {
 		Genre genre1 = new Genre("Новітній жанр");
 		Genre genre2 = new Genre("Новітній жанр");
 		
-		ArrayList<Book> books1 = new ArrayList<Book>();
-		ArrayList<Book> books2 = new ArrayList<Book>();
+//		ArrayList<Book> books1 = new ArrayList<Book>();
+//		ArrayList<Book> books2 = new ArrayList<Book>();
 		
-		Author author1 = new Author("м'я", "Країна",books1);
-		Author author2 = new Author("м'я", "Країна",books2);
+		Author author1 = new Author("м'я", "Країна");
+		Author author2 = new Author("м'я", "Країна");
 		
-		Book book1 = new Book("Test book", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
-		books1.add(book1);
+		Book book1 = new Book("Test book NEW", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
 		Book book2 = new Book("Test book", LocalDate.of(2015, 5, 13), 10.0, 1, author1, genre1);
-		book2.setBookId(2);
 		
 		
-		System.out.println(book1);
-		System.out.println(book2);
 		
-		System.out.println(books1.contains(book2)+" contains");
-//		AuthorDAO.refreshAuthors();
+		
 //		BookDAO.refreshBooks();
 //		
-		System.out.println(genre1);
 		
 		BookDAO.addBook(book1);
+//		BookDAO.buyTheBook(book1);
 		
+		
+//		BookDAO.buyTheBook(book1);
 //		Book book = new Book("New book", LocalDate.now(), 10.0, 1, author, genre);
 
 //		BookDAO.addBook(book);

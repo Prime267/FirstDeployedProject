@@ -21,6 +21,7 @@
 		<mapping class="lviv.home.model.Author" />
 		<mapping class="lviv.home.model.Book" />
 		<mapping class="lviv.home.model.Genre" />
+		<mapping class="lviv.home.model.BoughtBook" />
 		
 	</session-factory>
 </hibernate-configuration>

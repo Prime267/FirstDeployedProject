@@ -132,15 +132,33 @@ public class Book {
 	@Override
 	public boolean equals(Object obj) {
 		Book book = (Book) obj;
+		
+		System.out.println("book.getAuthor() in Book.equals: "+book.getAuthor());
+		System.out.println("this in Book.equals: "+this.getAuthor());
+//		System.out.println("this.getAuthor().equals(book.getAuthor())==="+this.getAuthor().equals(book.getAuthor()));
 		if (this.getTheName().equals(book.getTheName()) && this.getPrice().equals(book.getPrice())
-				&& this.getDate().equals(book.getDate()) && this.getGenre().equals(book.getGenre())
-				&& this.getAuthor().equals(book.getAuthor())) {
+				&& this.getDate().equals(book.getDate()) &&this.getGenre().equals(book.getGenre())
+				&&this.getAuthor().equals(book.getAuthor())) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	
+	
+	public boolean specialEqualsWithoutAuthorAndGenre(Object obj) {
+		Book book = (Book) obj;
+		System.out.println("book.getAuthor() in Book.equals: "+book.getAuthor());
+		System.out.println("this in Book.equals: "+this.getAuthor());
+//		System.out.println("this.getAuthor().equals(book.getAuthor())==="+this.getAuthor().equals(book.getAuthor()));
+		if (this.getTheName().equals(book.getTheName()) && this.getPrice().equals(book.getPrice())
+				&& this.getDate().equals(book.getDate())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	@Override
 	public String toString() {
 		return "Book [bookId=" + bookId + ", theName=" + theName + ", datePerform=" + date + ", price=" + price

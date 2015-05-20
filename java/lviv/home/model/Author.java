@@ -72,6 +72,7 @@ public class Author {
 	@Override
 	public boolean equals(Object obj) {
 		Author author = (Author) obj;
+
 		if (this.getAuthorName().equals(author.getAuthorName()) && this.getCountry().equals(author.getCountry())) {
 			return true;
 		} else {
@@ -82,7 +83,7 @@ public class Author {
 
 	@Override
 	public String toString() {
-		return authorName;
+		return authorName +" "+ country;
 	}
 
 }

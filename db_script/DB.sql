@@ -21,7 +21,7 @@ INSERT INTO `authordatabase`.`genre_table` (`genre_name`) VALUES
 
 
 create table book_table(
-book_id bigint primary key auto_increment,
+book_id INTEGER primary key auto_increment,
 the_name varchar(30),
 year_perform varchar(10),
 price double,
@@ -32,7 +32,7 @@ constraint authorFK foreign key (author_id) references author_table(author_id),
 constraint genreFK foreign key (genre_id) references genre_table(genre_id));
 
 create table sold_books_table(
-book_id bigint primary key auto_increment,
+book_id integer primary key auto_increment,
 the_name varchar(30),
 year_perform varchar(10),
 price double,
