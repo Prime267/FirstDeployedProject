@@ -153,9 +153,9 @@ public class BookDAO {
 				for (Book book : allBooks) {
 					if (newBook.specialEqualsWithoutAuthorAndGenre(book)) {
 						bookId = book.getBookId();
-						System.out.println("In method ADD!!");
-						System.out.println(newBook);
-						System.out.println(book);
+//						System.out.println("In method ADD!!");
+//						System.out.println(newBook);
+//						System.out.println(book);
 					}
 				}
 
